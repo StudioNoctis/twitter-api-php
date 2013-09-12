@@ -1,37 +1,47 @@
 <?php
+
+/**
+ * Twitter-API-PHP : Simple Etherfeed Twitter Data
+ * 
+ * PHP version 5.3.27
+ * 
+ * @category    	Data Stream
+ * @package     	Twitter-API-PHP-Etherfeed
+ * @author      	David McGreavy <david@studionoctis.com>
+ * @basedon         twitter-api-php by J7mbo
+ * @license     	MIT License
+ * @link        	http://github.com/StudioNoctis/twitter-api-php
+ * @requirements	PHP 5.3+ with cURL, Twitter Application
+ */
+
 ini_set('display_errors', 1);
 require_once('TwitterAPIExchange.php');
 
 /** Set access tokens here - see: https://dev.twitter.com/apps/ **/
 $settings = array(
-    'oauth_access_token' => "",
-    'oauth_access_token_secret' => "",
-    'consumer_key' => "",
-    'consumer_secret' => ""
+    'oauth_access_token' => "SET_VALUE",
+    'oauth_access_token_secret' => "SET_VALUE",
+    'consumer_key' => "SET_VALUE",
+    'consumer_secret' => "SET_VALUE"
 );
 
-/** URL for REST request, see: https://dev.twitter.com/docs/api/1.1/ **/
-$url = 'https://api.twitter.com/1.1/blocks/create.json';
-$requestMethod = 'POST';
-
-/** POST fields required by the URL above. See relevant docs as above **/
-$postfields = array(
-    'screen_name' => 'usernameToBlock', 
-    'skip_status' => '1'
-);
-
-/** Perform a POST request and echo the response **/
-$twitter = new TwitterAPIExchange($settings);
-echo $twitter->buildOauth($url, $requestMethod)
-             ->setPostfields($postfields)
-             ->performRequest();
-
-/** Perform a GET request and echo the response **/
-/** Note: Set the GET field BEFORE calling buildOauth(); **/
-$url = 'https://api.twitter.com/1.1/followers/ids.json';
-$getfield = '?screen_name=J7mbo';
+/** URL for the Twitter request, pulling in the stats for the username below **/
+$url = 'http://api.twitter.com/1.1/users/show.json';
+$getfield = '?screen_name=SET_VALUE';
 $requestMethod = 'GET';
+
 $twitter = new TwitterAPIExchange($settings);
-echo $twitter->setGetfield($getfield)
-             ->buildOauth($url, $requestMethod)
-             ->performRequest();
+$response = $twitter->setGetfield($getfield)
+                    ->buildOauth($url, $requestMethod)
+                    ->performRequest();
+$user = json_decode($response);
+
+/** echos the response from the GET Request **/
+/** Due to Etherfeed limitations it will only allow one line item **/
+/** Simply uncomment which field you want and save, it'll refresh **/
+
+echo "Followers $user->followers_count    \n";
+//echo "Favorites = $user->favourites_count  \n";
+//echo "Retweets = " . $user->status->retweet_count . "   \n";
+
+?>
