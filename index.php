@@ -8,9 +8,9 @@
  * @category    	Data Stream
  * @package     	Twitter-API-PHP-Etherfeed
  * @author      	David McGreavy <david@studionoctis.com>
- * @basedon         twitter-api-php by J7mbo
+ * @basedon             twitter-api-php by J7mbo
  * @license     	MIT License
- * @link        	http://github.com/StudioNoctis/twitter-api-php
+ * @link        	http://github.com/StudioNoctis/twitter-api-php-etherfeed
  * @requirements	PHP 5.3+ with cURL, Twitter Application
  */
 
